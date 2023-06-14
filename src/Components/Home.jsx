@@ -5,15 +5,23 @@ import {useAuthState} from 'react-firebase-hooks/auth'
 import {auth} from "../FirebaseConfig"; 
 import { useNavigate } from 'react-router-dom';
 //will navigate to a diffrent page,we can use it with click function 
-import './home.scss'
+import './home.scss';
+import {signOut} from "firebase/auth"; 
+import { useState } from 'react';
 const Home = () => { 
   //fetching the status of user using the custom hook 
-  const [user,loading,error]=useAuthState(auth); 
+  const [user,loading,error]=useAuthState(auth);
+  const [logoutMsg,setLogoutMsg]=useState('');
   // checking if info is correctly obtained 
   console.log(user);
   console.log(loading);
   console.log(error); 
-  const navigate=useNavigate();
+  const navigate=useNavigate(); 
+  const signUserOut= async ()=>{
+    await signOut(auth);
+    setLogoutMsg('You have been signed out successfully'); 
+    alert("You have been signed out successfully")
+  }
   
   return ( 
     <div className="container">
@@ -22,8 +30,17 @@ const Home = () => {
     {loading?
     (<div>Loading..</div>):
     (
-      <>
-      {user?(<div>SHOW USER INFO WITH LOGOUT BUTTON</div>):
+      <> 
+      {/* //at the end once email verification is done */}
+      {user?(<div>
+       
+        <button  className='btn btn-danger btn-md' onClick={signUserOut}>
+          SIGN OUT
+        </button> 
+        {logoutMsg!==''&&(
+                    <div className='logout-msg'>{logoutMsg}</div>
+                  )}
+        </div>):
       (<button className='btn btn-primary btn-md'onClick={()=>navigate('/login')}>LOGIN</button>)
       } 
       </>
