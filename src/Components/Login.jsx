@@ -118,7 +118,7 @@ const Login = () => {
               ):(
                 // for a split second we will see this form
                 <form className='form-group custom-form' onSubmit={handleLogin}>
-                  <label>Email</label>
+                  <label>Enter your current email account</label>
                   <input type={'email'} required placeholder='Enter Email'
                   className='form-control'
                   value={email||''} onChange={(e)=>setEmail(e.target.value)}/>

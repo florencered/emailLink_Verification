@@ -20,7 +20,9 @@ const Home = () => {
   const signUserOut= async ()=>{
     await signOut(auth);
     setLogoutMsg('You have been signed out successfully'); 
-    alert("You have been signed out successfully")
+    console.log(logoutMsg); 
+    alert(logoutMsg);
+    alert("You have been signed out successfully") 
   }
   
   return ( 
